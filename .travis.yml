@@ -10,7 +10,7 @@ env:
 before_script:
   - dpkg -l
   - cp .env.example .env
-  - mysql -e 'create database medical;'
+  - mysql -e 'create database qtn_app;'
   - mysql -u root -h 127.0.0.1 -e "SHOW DATABASES"
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('secret')"
   - composer i --no-dev --optimize-autoloader --classmap-authoritative
