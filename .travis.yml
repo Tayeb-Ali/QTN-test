@@ -23,6 +23,7 @@ before_script:
   - npm install
   - npm run dev
   - php artisan migrate --seed
+  - php artisan db:seed
   - ls -la
 
 script:
