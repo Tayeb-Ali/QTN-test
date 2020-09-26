@@ -1,0 +1,258 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigInteger,true,true",
+        "htmlType": null,
+        "validations": null,
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "reference_no",
+        "dbType": "string,191",
+        "htmlType": "text",
+        "validations": "required|string|max:191|string|max:191",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "item",
+        "dbType": "bigInteger,false",
+        "htmlType": null,
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "total_qty",
+        "dbType": "float,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "total_discount",
+        "dbType": "float,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "total_tax",
+        "dbType": "float,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "total_price",
+        "dbType": "float,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "order_tax",
+        "dbType": "float,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "order_tax_rate",
+        "dbType": "float,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "grand_total",
+        "dbType": "float,10,0",
+        "htmlType": null,
+        "validations": "nullable|numeric|nullable|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "quotation_status",
+        "dbType": "bigInteger,false",
+        "htmlType": null,
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "document",
+        "dbType": "string,191:nullable",
+        "htmlType": "text",
+        "validations": "nullable|string|max:191|nullable|string|max:191",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "note",
+        "dbType": "text,65535:nullable",
+        "htmlType": "textarea",
+        "validations": "nullable|string|nullable|string",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "user_id",
+        "dbType": "bigInteger,false,true",
+        "htmlType": null,
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "supplier_id",
+        "dbType": "bigInteger,false,true",
+        "htmlType": null,
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "customer_id",
+        "dbType": "bigInteger,false,true",
+        "htmlType": null,
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "department_id",
+        "dbType": "bigInteger,false,true",
+        "htmlType": null,
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "created_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "deleted_at",
+        "dbType": "datetime:nullable",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Customer,customer_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Department,department_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Supplier,supplier_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,User,user_id"
+    }
+]
