@@ -12,9 +12,11 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
 //        factory(App\Models\Role::class, 5)->create();
-        $this->roles();
-        $this->crateUsers();
-        $this->cat();
+        $role = $this->roles();
+        if ($role) {
+            $this->crateUsers();
+            $this->cat();
+        }
 //        factory(App\Models\Categorie::class, 5)->create();
 //        factory(App\Models\Manager::class, 2)->create();
 //        factory(App\Models\Product::class, 5)->create();
