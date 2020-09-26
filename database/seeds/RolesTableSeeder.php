@@ -11,19 +11,46 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Role::class, 5)->create();
+//        factory(App\Models\Role::class, 5)->create();
+        $this->roles();
         $this->crateUsers();
-        factory(App\Models\Categorie::class, 5)->create();
-        factory(App\Models\Manager::class, 2)->create();
-        factory(App\Models\Product::class, 5)->create();
-        factory(App\Models\Branches::class, 5)->create();
-        factory(App\Models\Department::class, 5)->create();
-        factory(App\Models\Employee::class, 5)->create();
-        factory(App\Models\Customer::class, 5)->create();
-        factory(App\Models\Supplier::class, 5)->create();
-        factory(App\Models\Quotation::class, 2)->create();
+        $this->cat();
+//        factory(App\Models\Categorie::class, 5)->create();
+//        factory(App\Models\Manager::class, 2)->create();
+//        factory(App\Models\Product::class, 5)->create();
+//        factory(App\Models\Branches::class, 5)->create();
+//        factory(App\Models\Department::class, 5)->create();
+//        factory(App\Models\Employee::class, 5)->create();
+//        factory(App\Models\Customer::class, 5)->create();
+//        factory(App\Models\Supplier::class, 5)->create();
+//        factory(App\Models\Quotation::class, 2)->create();
 
 
+    }
+
+    public function roles()
+    {
+        DB::table('roles')->insert([
+            'name' => 'supervisors',
+            'description' => 'Super Admin (Area manager)',
+            'guard_name' => 'web',
+            'created_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        DB::table('roles')->insert([
+            'name' => 'admin',
+            'description' => 'Branch manager',
+            'guard_name' => 'web',
+            'created_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        DB::table('roles')->insert([
+            'name' => 'employee',
+            'description' => 'Employees Manger',
+            'guard_name' => 'web',
+            'created_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
+        ]);
     }
 
     public function crateUsers()
@@ -47,6 +74,27 @@ class RolesTableSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
         ]);
+    }
 
-}
+    public function cat()
+    {
+        DB::table('categories')->insert([
+            'name' => 'car',
+            'logo' => 'cat.png',
+            'created_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        DB::table('categories')->insert([
+            'name' => 'moto',
+            'logo' => 'cat.png',
+            'created_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+        DB::table('categories')->insert([
+            'name' => 'byc',
+            'logo' => 'cat.png',
+            'created_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+    }
 }
