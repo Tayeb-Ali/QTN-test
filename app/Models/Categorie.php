@@ -3,7 +3,11 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Categorie
@@ -49,14 +53,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string $name
  * @property string $logo
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Collection|Product[] $products
  * @property-read int|null $products_count
  * @method static \Illuminate\Database\Eloquent\Builder|Categorie newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Categorie newQuery()
- * @method static \Illuminate\Database\Query\Builder|Categorie onlyTrashed()
+ * @method static Builder|Categorie onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Categorie query()
  * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereDeletedAt($value)
@@ -64,8 +68,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereLogo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Categorie withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Categorie withoutTrashed()
+ * @method static Builder|Categorie withTrashed()
+ * @method static Builder|Categorie withoutTrashed()
  * @mixin Model
  */
 class Categorie extends Model
@@ -95,7 +99,6 @@ class Categorie extends Model
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
-        'logo' => 'string'
     ];
 
     /**
@@ -109,10 +112,10 @@ class Categorie extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      **/
     public function products()
     {
-        return $this->hasMany(\App\Models\Product::class, 'category_id');
+        return $this->hasMany(Product::class, 'category_id');
     }
 }

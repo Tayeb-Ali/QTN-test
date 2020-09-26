@@ -7,7 +7,7 @@
 <!-- Logo Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('logo', __('models/categories.fields.logo').':') !!}
-    {!! Form::text('logo', null, ['class' => 'form-control']) !!}
+    <input type="file" name="logo">
 </div>
 
 <!-- Submit Field -->

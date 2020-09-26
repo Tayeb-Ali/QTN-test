@@ -140,7 +140,6 @@ class Product extends Model
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
-        'logo' => 'string',
         'status' => 'integer',
         'price' => 'float',
         'cost' => 'float',
@@ -155,7 +154,7 @@ class Product extends Model
      */
     public static $rules = [
         'name' => 'required|string|max:191',
-        'logo' => 'required|string|max:191',
+        'logo' => 'required',
         'status' => 'required|integer',
         'price' => 'required|numeric',
         'cost' => 'required|numeric',

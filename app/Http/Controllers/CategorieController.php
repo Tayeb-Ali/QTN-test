@@ -6,7 +6,11 @@ use App\DataTables\CategorieDataTable;
 use App\Http\Requests\CreateCategorieRequest;
 use App\Http\Requests\UpdateCategorieRequest;
 use App\Repositories\CategorieRepository;
+use Exception;
 use Flash;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Response;
 
 class CategorieController extends AppBaseController
@@ -50,6 +54,14 @@ class CategorieController extends AppBaseController
     public function store(CreateCategorieRequest $request)
     {
         $input = $request->all();
+        if ($request->hasFile('logo')) {
+            $input['logo'] = self::saveFile($request);
+            $this->categorieRepository->create($input);
+
+            Flash::success(__('lang.saved_successfully', ['model' => __('models/categories.singular')]));
+
+            return redirect(route('categories.index'));
+        }
 
         $categorie = $this->categorieRepository->create($input);
 
@@ -108,6 +120,7 @@ class CategorieController extends AppBaseController
      */
     public function update($id, UpdateCategorieRequest $request)
     {
+        $input= $request->all();
         $categorie = $this->categorieRepository->find($id);
 
         if (empty($categorie)) {
@@ -115,7 +128,12 @@ class CategorieController extends AppBaseController
 
             return redirect(route('categories.index'));
         }
-
+        if ($request->hasFile('logo')) {
+            $input['logo'] = self::saveFile($request);
+            $this->categorieRepository->update($input, $id);
+            Flash::success(__('lang.updated_successfully', ['model' => __('models/categories.singular')]));
+            return redirect(route('categories.index'));
+        }
         $categorie = $this->categorieRepository->update($request->all(), $id);
 
         Flash::success(__('lang.updated_successfully', ['model' => __('models/categories.singular')]));
@@ -129,7 +147,7 @@ class CategorieController extends AppBaseController
      * @param int $id
      *
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function destroy($id)
     {
@@ -146,5 +164,24 @@ class CategorieController extends AppBaseController
         Flash::success(__('lang.deleted_successfully', ['model' => __('models/categories.singular')]));
 
         return redirect(route('categories.index'));
+    }
+
+    /**
+     * @param Request $request
+     * @return UrlGenerator|string
+     */
+    public function saveFile(Request $request)
+    {
+        try {
+            $random = Str::random(10);
+            $image = $request->file('logo');
+            $name = $random . '_logo_cat.' . $request->logo->extension();
+            $image->move(public_path() . '/logo', $name);
+            return $name = url("logo/$name");
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+        return $name;
+
     }
 }

@@ -7,7 +7,7 @@
 <!-- Logo Field -->
 <div class="form-group">
     {!! Form::label('logo', __('models/products.fields.logo').':') !!}
-    <p>{{ $product->logo }}</p>
+    <img height="150" width="150" src="{{$product->logo }}">
 </div>
 
 <!-- Status Field -->

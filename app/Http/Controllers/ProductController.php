@@ -6,11 +6,13 @@ use App\DataTables\ProductDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Categorie;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Response;
 
 class ProductController extends AppBaseController
@@ -40,7 +42,8 @@ class ProductController extends AppBaseController
      */
     public function create()
     {
-        return view('products.create');
+        $cats = Categorie::all();
+        return view('products.create', compact('cats'));
     }
 
     /**
@@ -52,6 +55,7 @@ class ProductController extends AppBaseController
     {
         $input = $request->all();
 
+        $input['logo'] = $this->saveFile($request);
         $product = $this->productRepository->create($input);
 
         Flash::success(__('lang.saved_successfully', ['model' => __('models/products.singular')]));
@@ -93,8 +97,8 @@ class ProductController extends AppBaseController
 
             return redirect(route('products.index'));
         }
-
-        return view('products.edit')->with('product', $product);
+        $cats = Categorie::all();
+        return view('products.edit', compact(['product', 'cats']));
     }
 
     /**
@@ -106,10 +110,19 @@ class ProductController extends AppBaseController
      */
     public function update($id, UpdateProductRequest $request)
     {
+
         $product = $this->productRepository->find($id);
 
         if (empty($product)) {
             Flash::error(__('lang.not_found', ['model' => __('models/products.singular')]));
+
+            return redirect(route('products.index'));
+        }
+        if ($request->has('logo')) {
+            $input = $request->all();
+            $input['logo'] = $this->saveFile($request);
+            $this->productRepository->update($input, $id);
+            Flash::success(__('lang.updated_successfully', ['model' => __('models/products.singular')]));
 
             return redirect(route('products.index'));
         }
@@ -173,4 +186,17 @@ class ProductController extends AppBaseController
         return $product;
     }
 
+    public function saveFile(Request $request)
+    {
+        try {
+            $random = Str::random(10);
+            $image = $request->file('logo');
+            $name = $random . '_logo_pr.' . $request->logo->extension();
+            $image->move(public_path() . '/logo', $name);
+            $name = url("logo/$name");
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+        return $name;
+    }
 }
