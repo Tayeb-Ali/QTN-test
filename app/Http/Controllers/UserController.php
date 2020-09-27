@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UserDataTable;
-use App\Http\Requests;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Role;
 use App\Repositories\UserRepository;
 use Flash;
-use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Hash;
 use Response;
 
 class UserController extends AppBaseController
@@ -39,7 +39,9 @@ class UserController extends AppBaseController
      */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all()->pluck('name', 'id');
+        $select = 1;
+        return view('users.create', compact('roles', 'select'));
     }
 
     /**
@@ -52,7 +54,7 @@ class UserController extends AppBaseController
     public function store(CreateUserRequest $request)
     {
         $input = $request->all();
-
+        $input['password'] = Hash::make($input['password']);
         $user = $this->userRepository->create($input);
 
         Flash::success(__('lang.saved_successfully', ['model' => __('models/users.singular')]));
@@ -63,7 +65,7 @@ class UserController extends AppBaseController
     /**
      * Display the specified User.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -72,7 +74,7 @@ class UserController extends AppBaseController
         $user = $this->userRepository->find($id);
 
         if (empty($user)) {
-            Flash::error(__('models/users.singular').' '.__('lang.not_found'));
+            Flash::error(__('models/users.singular') . ' ' . __('lang.not_found'));
 
             return redirect(route('users.index'));
         }
@@ -83,7 +85,7 @@ class UserController extends AppBaseController
     /**
      * Show the form for editing the specified User.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -97,13 +99,15 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        return view('users.edit')->with('user', $user);
+        $roles = Role::all()->pluck('name', 'id');
+        $select = $user->role->id;
+        return view('users.edit', compact('user', 'select', 'roles'));
     }
 
     /**
      * Update the specified User in storage.
      *
-     * @param  int              $id
+     * @param int $id
      * @param UpdateUserRequest $request
      *
      * @return Response
@@ -117,8 +121,10 @@ class UserController extends AppBaseController
 
             return redirect(route('users.index'));
         }
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
 
-        $user = $this->userRepository->update($request->all(), $id);
+        $this->userRepository->update($input, $id);
 
         Flash::success(__('lang.updated_successfully', ['model' => __('models/users.singular')]));
 
@@ -128,9 +134,10 @@ class UserController extends AppBaseController
     /**
      * Remove the specified User from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
+     * @throws \Exception
      */
     public function destroy($id)
     {

@@ -31,14 +31,10 @@
 <!-- Role Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('role_id', __('models/users.fields.role_id').':') !!}
-    {!! Form::number('role_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('role_id', $roles, $select, ['class' => 'form-control']) !!}
+
 </div>
 
-<!-- Remember Token Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('remember_token', __('models/users.fields.remember_token').':') !!}
-    {!! Form::text('remember_token', null, ['class' => 'form-control']) !!}
-</div>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
