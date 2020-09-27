@@ -42,8 +42,9 @@ class ProductController extends AppBaseController
      */
     public function create()
     {
-        $cats = Categorie::all();
-        return view('products.create', compact('cats'));
+        $cats = Categorie::all()->pluck('name', 'id');
+        $select =1;
+        return view('products.create', compact('cats', 'select'));
     }
 
     /**
@@ -97,8 +98,9 @@ class ProductController extends AppBaseController
 
             return redirect(route('products.index'));
         }
-        $cats = Categorie::all();
-        return view('products.edit', compact(['product', 'cats']));
+        $cats = Categorie::all()->pluck('name', 'id');
+        $select = $product->category->id;
+        return view('products.edit', compact(['product', 'cats', 'select']));
     }
 
     /**

@@ -19,19 +19,21 @@
 <!-- Department Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('department_id', __('models/employees.fields.department_id').':') !!}
-    {!! Form::number('department_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('department_id', $department, $select, ['class' => 'form-control']) !!}
+
 </div>
 
 <!-- User Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('user_id', __('models/employees.fields.user_id').':') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('user_id', $users, $selecUser, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Image Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('image', __('models/employees.fields.image').':') !!}
-    {!! Form::text('image', null, ['class' => 'form-control']) !!}
+    {!! Form::file('image', ['class' => 'form-control']) !!}
+{{--    {!! Form::text('image', null, ['class' => 'form-control']) !!}--}}
 </div>
 
 <!-- Address Field -->

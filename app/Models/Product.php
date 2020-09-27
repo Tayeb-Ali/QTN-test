@@ -154,7 +154,7 @@ class Product extends Model
      */
     public static $rules = [
         'name' => 'required|string|max:191',
-        'logo' => 'required',
+//        'logo' => 'required',
         'status' => 'required|integer',
         'price' => 'required|numeric',
         'cost' => 'required|numeric',
@@ -170,6 +170,6 @@ class Product extends Model
      **/
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Categorie::class, 'category_id');
     }
 }

@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Branches
@@ -56,13 +59,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property int|null $manager_id
  * @property string $address
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\Manager|null $manager
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Manager|null $manager
  * @method static \Illuminate\Database\Eloquent\Builder|Branches newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Branches newQuery()
- * @method static \Illuminate\Database\Query\Builder|Branches onlyTrashed()
+ * @method static Builder|Branches onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Branches query()
  * @method static \Illuminate\Database\Eloquent\Builder|Branches whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Branches whereCreatedAt($value)
@@ -71,8 +74,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Branches whereManagerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Branches whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Branches whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Branches withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Branches withoutTrashed()
+ * @method static Builder|Branches withTrashed()
+ * @method static Builder|Branches withoutTrashed()
  * @mixin Model
  */
 class Branches extends Model
@@ -80,13 +83,12 @@ class Branches extends Model
     use SoftDeletes;
 
     public $table = 'branches';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -122,10 +124,10 @@ class Branches extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      **/
     public function manager()
     {
-        return $this->belongsTo(\App\Models\Manager::class, 'manager_id');
+        return $this->belongsTo(Manager::class, 'manager_id');
     }
 }

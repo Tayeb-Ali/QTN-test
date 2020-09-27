@@ -7,13 +7,13 @@
 <!-- Manager Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('manager_id', __('models/branches.fields.manager_id').':') !!}
-    {!! Form::number('manager_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('manager_id', $managers, $select, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Address Field -->
-<div class="form-group col-sm-12 col-lg-12">
+<div class="form-group col-sm-6">
     {!! Form::label('address', __('models/branches.fields.address').':') !!}
-    {!! Form::textarea('address', null, ['class' => 'form-control']) !!}
+    {!! Form::text('address', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Submit Field -->

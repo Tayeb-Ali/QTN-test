@@ -3,7 +3,11 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Department
@@ -49,16 +53,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property string $name
  * @property string $address
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Employee[] $employees
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Collection|Employee[] $employees
  * @property-read int|null $employees_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Quotation[] $quotations
+ * @property-read Collection|Quotation[] $quotations
  * @property-read int|null $quotations_count
  * @method static \Illuminate\Database\Eloquent\Builder|Department newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Department newQuery()
- * @method static \Illuminate\Database\Query\Builder|Department onlyTrashed()
+ * @method static Builder|Department onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Department query()
  * @method static \Illuminate\Database\Eloquent\Builder|Department whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Department whereCreatedAt($value)
@@ -66,8 +70,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Department whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Department whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Department whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Department withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Department withoutTrashed()
+ * @method static Builder|Department withTrashed()
+ * @method static Builder|Department withoutTrashed()
  * @mixin Model
  */
 class Department extends Model
@@ -75,13 +79,12 @@ class Department extends Model
     use SoftDeletes;
 
     public $table = 'departments';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
 
     protected $dates = ['deleted_at'];
-
 
 
     public $fillable = [
@@ -114,18 +117,18 @@ class Department extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      **/
     public function employees()
     {
-        return $this->hasMany(\App\Models\Employee::class, 'department_id');
+        return $this->hasMany(Employee::class, 'department_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      **/
     public function quotations()
     {
-        return $this->hasMany(\App\Models\Quotation::class, 'department_id');
+        return $this->hasMany(Quotation::class, 'department_id');
     }
 }

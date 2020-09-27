@@ -11,7 +11,7 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'employees.store']) !!}
+                    {!! Form::open(['route' => 'employees.store', 'files'=> true]) !!}
 
                         @include('employees.fields')
 

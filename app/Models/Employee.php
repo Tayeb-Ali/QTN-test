@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Employee
@@ -93,14 +96,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $address
  * @property string|null $city
  * @property string|null $country
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\Department $department
- * @property-read \App\Models\User $user
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read Department $department
+ * @property-read User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee newQuery()
- * @method static \Illuminate\Database\Query\Builder|Employee onlyTrashed()
+ * @method static Builder|Employee onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee query()
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereCity($value)
@@ -115,8 +118,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Employee wherePhoneNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Employee whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|Employee withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Employee withoutTrashed()
+ * @method static Builder|Employee withTrashed()
+ * @method static Builder|Employee withoutTrashed()
  * @mixin Model
  */
 class Employee extends Model
@@ -124,14 +127,14 @@ class Employee extends Model
     use SoftDeletes;
 
     public $table = 'employees';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
 
     protected $dates = ['deleted_at'];
 
-
+    protected $with= ['department', 'user'];
 
     public $fillable = [
         'name',
@@ -174,7 +177,7 @@ class Employee extends Model
         'phone_number' => 'required|string|max:191',
         'department_id' => 'required',
         'user_id' => 'required',
-        'image' => 'nullable|string|max:191',
+        'image' => 'nullable',
         'address' => 'nullable|string|max:191',
         'city' => 'nullable|string|max:191',
         'country' => 'nullable|string|max:191',
@@ -184,18 +187,18 @@ class Employee extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      **/
     public function department()
     {
-        return $this->belongsTo(\App\Models\Department::class, 'department_id');
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      **/
     public function user()
     {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -7,16 +7,15 @@
 <!-- Logo Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('logo', __('models/products.fields.logo').':') !!}
-    <input type="file" name="logo">
+    {{--    <input type="file" name="">--}}
+    {!! Form::file('logo');
+ !!}
 </div>
 
 <!-- Status Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('status', __('models/products.fields.status').':') !!}
-    <select class="form-control" name="status">
-        <option value="1">is active</option>
-        <option value="2">disable</option>
-    </select>
+    {!! Form::select('status', [1 => 'is active', 2 => 'disable'],1, ['class' => 'form-control'])!!}
 </div>
 
 <!-- Price Field -->
@@ -40,11 +39,8 @@
 <!-- Category Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('category_id', __('models/products.fields.category_id').':') !!}
-    <select class="form-control" name="category_id">
-        @foreach($cats as $cat)
-            <option value="{{$cat->id}}">{{$cat->name}}</option>
-        @endforeach
-    </select></div>
+    {!! Form::select('category_id', $cats, $select, ['class' => 'form-control']) !!}
+</div>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">

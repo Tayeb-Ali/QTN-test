@@ -6,6 +6,7 @@ use App\DataTables\BranchesDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateBranchesRequest;
 use App\Http\Requests\UpdateBranchesRequest;
+use App\Models\Manager;
 use App\Repositories\BranchesRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
@@ -39,7 +40,9 @@ class BranchesController extends AppBaseController
      */
     public function create()
     {
-        return view('branches.create');
+        $managers = Manager::all()->pluck('name', 'id');
+        $select = 1;
+        return view('branches.create', compact('managers', 'select'));
     }
 
     /**
@@ -63,7 +66,7 @@ class BranchesController extends AppBaseController
     /**
      * Display the specified Branches.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -72,7 +75,7 @@ class BranchesController extends AppBaseController
         $branches = $this->branchesRepository->find($id);
 
         if (empty($branches)) {
-            Flash::error(__('models/branches.singular').' '.__('lang.not_found'));
+            Flash::error(__('models/branches.singular') . ' ' . __('lang.not_found'));
 
             return redirect(route('branches.index'));
         }
@@ -83,7 +86,7 @@ class BranchesController extends AppBaseController
     /**
      * Show the form for editing the specified Branches.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
@@ -97,13 +100,15 @@ class BranchesController extends AppBaseController
             return redirect(route('branches.index'));
         }
 
-        return view('branches.edit')->with('branches', $branches);
+        $managers = Manager::all()->pluck('name', 'id');
+        $select = $branches->manager->id;
+        return view('branches.edit', compact(['branches', 'select', 'managers']));
     }
 
     /**
      * Update the specified Branches in storage.
      *
-     * @param  int              $id
+     * @param int $id
      * @param UpdateBranchesRequest $request
      *
      * @return Response
@@ -128,7 +133,7 @@ class BranchesController extends AppBaseController
     /**
      * Remove the specified Branches from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Response
      */
